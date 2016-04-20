@@ -8,6 +8,7 @@ A phpBB extension that allows the user to save and load drafts. Also drafts will
 * Load drafts manually
 * Load last draft automatically
 * German language file
+
 ### For version 1.1.0
 * UCP module where you can set the auto save interval
 * ACP module where an admin can set the auto save interval default
