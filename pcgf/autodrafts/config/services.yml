@@ -1,0 +1,8 @@
+services:
+  pcgf.autodrafts.listener:
+    class: pcgf\autodrafts\event\listener
+    arguments:
+      - @user
+      - @template
+    tags:
+      - { name: event.listener }
