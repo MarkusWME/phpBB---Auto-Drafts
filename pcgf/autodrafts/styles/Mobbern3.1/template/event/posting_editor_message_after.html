@@ -1,30 +1,26 @@
-<input id="pcgf-autodrafts-save" class="button2 hidden" type="submit" value="{L_PCGF_QUICK_DRAFT}"/>
-<input id="pcgf-autodrafts-load" class="button2 hidden" type="submit" value="{L_PCGF_LOAD_DRAFT}"/>
-<div id="pcgf-autodrafts-container" class="panel bg2 hidden">
-    <input id="pcgf-autodrafts-forum-id" type="hidden" value="{S_FORUM_ID}"/>
-    <input id="pcgf-autodrafts-topic-id" type="hidden" value="{S_TOPIC_ID}"/>
-    <input id="pcgf-autodrafts-username" type="hidden" value="{S_USERNAME}"/>
-    <div id="pcgf-autodrafts-drafts"></div>
-    <br/><br/>
-    <div>
-        <input id="pcgf-autodrafts-close" class="button2 hidden" type="submit" value="{L_PCGF_CLOSE_DRAFTS}"/>
-    </div>
-</div>
+<input id="pcgf-autodrafts-forum-id" type="hidden" value="{S_FORUM_ID}"/>
+<input id="pcgf-autodrafts-topic-id" type="hidden" value="{S_TOPIC_ID}"/>
+<input id="pcgf-autodrafts-username" type="hidden" value="{S_USERNAME}"/>
 <script type="text/javascript">
     var pcgfDateTimeFormat = '{PCGF_AUTO_DRAFT_DATE_FORMAT}';
     var pcgfAutoDeleteInterval = '{PCGF_AUTO_DELETE_INTERVAL}';
     var pcgfAutoSaveInterval = '{PCGF_AUTO_SAVE_INTERVAL}';
     var pcgfLanguageAction = '{LA_PCGF_ACTION}';
     var pcgfLanguageAutoDraft = '{LA_PCGF_AUTO_DRAFT}';
+    var pcgfLanguageCloseDrafts = '{LA_PCGF_CLOSE_DRAFTS}';
     var pcgfLanguageDeleteDraft = '{LA_PCGF_DELETE_DRAFT}';
     var pcgfLanguageDraftMessage = '{LA_PCGF_DRAFT_TEXT}';
     var pcgfLanguageDraftSubject = '{LA_SUBJECT}';
     var pcgfLanguageDraftTime = '{LA_PCGF_DRAFT_TIME}';
+    var pcgfLanguageLoadDraft = '{LA_PCGF_LOAD_DRAFT}';
     var pcgfLanguageNoDraftsFound = '{LA_PCGF_NO_DRAFTS}';
+    var pcgfLanguageSaveDraft = '{LA_PCGF_QUICK_DRAFT}';
     var pcgfYes = '{LA_YES}';
     var pcgfNo = '{LA_NO}';
     var pcgfLocales = '{PCGF_LOCALES}';
 </script>
 <!-- INCLUDEJS @pcgf_autodrafts/javascript/dateformatter_min.js -->
+<!-- INCLUDEJS @pcgf_autodrafts/javascript/initialize_mobbern.js -->
 <!-- INCLUDEJS @pcgf_autodrafts/javascript/show_drafts.js -->
 <!-- INCLUDEJS @pcgf_autodrafts/javascript/autodrafts.js -->
+<!-- INCLUDEJS @pcgf_autodrafts/javascript/finalize_mobbern.js -->

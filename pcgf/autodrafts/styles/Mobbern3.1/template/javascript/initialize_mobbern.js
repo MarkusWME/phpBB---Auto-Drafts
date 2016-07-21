@@ -1,0 +1,3 @@
+var pcgfAutoDraftsFieldset = $('fieldset.submit-buttons');
+var pcgfAutoDraftsCurrentHTML = pcgfAutoDraftsFieldset.html();
+pcgfAutoDraftsFieldset.html('<input id="pcgf-autodrafts-save" class="button2 button-secondary hidden" type="submit" value="' + pcgfLanguageSaveDraft + '"/>&nbsp;&nbsp;<input id="pcgf-autodrafts-load" class="button2 button-secondary hidden" type="submit" value="' + pcgfLanguageLoadDraft + '"/>&nbsp;<div id="pcgf-autodrafts-container" class="panel panel-body bg2 hidden"><div id="pcgf-autodrafts-drafts"></div><div><input id="pcgf-autodrafts-close" class="button2 button-secondary hidden" type="submit" value="' + pcgfLanguageCloseDrafts + '"/></div></div>' + pcgfAutoDraftsCurrentHTML);

@@ -1,5 +1,5 @@
 # phpBB - Auto Drafts
-A phpBB extension that allows the user to save and load drafts. Also drafts will be created automatically every 20 seconds. The extension works offline all the way, so no communication with the server is needed.
+A phpBB extension that allows the user to save and load drafts. Also drafts will be created automatically every 20 seconds and deleted automatically after 30 days. All data for the drafts will be stored on the local system.
 
 **This project is still under construction, currently not all features are working**
 

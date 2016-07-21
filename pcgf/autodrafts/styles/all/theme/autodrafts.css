@@ -1,3 +1,49 @@
 .hidden {
     display: none;
 }
+
+.centered {
+    text-align: center;
+}
+
+#pcgf-autodrafts-container > div {
+    display: inline-block;
+    max-width: 100%;
+    text-align: center;
+    width: 100%;
+}
+
+table.pcgf-drafts {
+    border-collapse: collapse;
+    max-width: 100%;
+    table-layout: fixed;
+    text-align: left;
+    width: 100%;
+}
+
+table.pcgf-drafts tr:not(:first-child):hover {
+    background-color: rgb(220, 220, 220);
+    cursor: pointer;
+}
+
+table.pcgf-drafts tr th {
+    font-weight: bold;
+}
+
+table.pcgf-drafts tr td[colspan="5"] {
+    text-align: center;
+}
+
+table.pcgf-drafts tr th, table.pcgf-drafts tr td {
+    border: 1px solid rgb(100, 100, 100);
+    padding: 4px;
+    word-wrap: break-word;
+}
+
+table.pcgf-drafts tr td:last-child {
+    text-align: center;
+}
+
+table.pcgf-drafts tr td > input {
+    margin: 0px 3px;
+}
