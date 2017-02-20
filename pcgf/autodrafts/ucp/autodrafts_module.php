@@ -46,10 +46,10 @@ class autodrafts_module
         if ($request->is_set_post('submit'))
         {
             $data = array(
-                'save_interval'           => $db->sql_escape(request_var('autodrafts_save_interval', 20)),
-                'delete_interval'         => $db->sql_escape(request_var('autodrafts_delete_interval', 2592000)),
-                'insert_last'             => $db->sql_escape(request_var('autodrafts_insert_last', 1)),
-                'delete_after_submission' => $db->sql_escape(request_var('autodrafts_delete_after_submission', 1)),
+                'save_interval'           => $db->sql_escape($request->variable('autodrafts_save_interval', 20)),
+                'delete_interval'         => $db->sql_escape($request->variable('autodrafts_delete_interval', 2592000)),
+                'insert_last'             => $db->sql_escape($request->variable('autodrafts_insert_last', 1)),
+                'delete_after_submission' => $db->sql_escape($request->variable('autodrafts_delete_after_submission', 1)),
             );
             if ($user_settings)
             {
