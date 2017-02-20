@@ -11,7 +11,7 @@ function showDrafts() {
         draft = drafts[i];
         if (draft.username === pcgfDraftUsername && draft.forumId === pcgfDraftForumId && draft.topicId === pcgfDraftTopicId) {
             found = true;
-            draftListContent += '<tr><td>' + dateFormatter.format(pcgfDateTimeFormat, draft.time) + '</td><td>' + dateFormatter.format(pcgfDateTimeFormat, draft.time + (pcgfAutoDeleteInterval * 1)) + '</td><td class="centered">' + (draft.autoDraft ? pcgfYes : pcgfNo) + '</td><td>' + draft.subject + '</td><td>' + draft.message + '</td><td><input id="pcgf-autodrafts-time" type="hidden" value="' + draft.time + '"/><input id="pcgf-autodrafts-load" class="button2" type="submit" value="' + pcgfDraftLoadButton.val() + '"/><input id="pcgf-autodrafts-delete" class="button2" type="submit" value="' + pcgfLanguageDeleteDraft + '"/></td></tr>';
+            draftListContent += '<tr><td>' + dateFormatter.format(pcgfDateTimeFormat, draft.time) + '</td><td>' + (pcgfAutoDeleteInterval == 0 ? '' : dateFormatter.format(pcgfDateTimeFormat, draft.time + (pcgfAutoDeleteInterval * 1))) + '</td><td class="centered">' + (draft.autoDraft ? pcgfYes : pcgfNo) + '</td><td>' + draft.subject + '</td><td>' + draft.message + '</td><td><input id="pcgf-autodrafts-time" type="hidden" value="' + draft.time + '"/><input id="pcgf-autodrafts-load" class="button2" type="submit" value="' + pcgfDraftLoadButton.val() + '"/><input id="pcgf-autodrafts-delete" class="button2" type="submit" value="' + pcgfLanguageDeleteDraft + '"/></td></tr>';
         }
     }
     if (!found) {
