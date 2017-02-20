@@ -2,7 +2,9 @@ services:
   pcgf.autodrafts.listener:
     class: pcgf\autodrafts\event\listener
     arguments:
-      - @user
-      - @template
+      - '@user'
+      - '@template'
+      - '@config'
+      - '@dbal.conn'
     tags:
       - { name: event.listener }

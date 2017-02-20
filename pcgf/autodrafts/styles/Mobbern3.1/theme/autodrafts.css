@@ -6,6 +6,10 @@
     text-align: center;
 }
 
+.ucp-main fieldset dt span {
+    display: inline !important;
+}
+
 #pcgf-autodrafts-container {
     display: block;
     background-color: rgb(245, 245, 245);
@@ -42,7 +46,7 @@
 
 #pcgf-autodrafts-drafts ul.topiclist li dl {
     margin: 5px;
-    padding: 0px;
+    padding: 0;
 }
 
 #pcgf-autodrafts-drafts ul.topiclist dd {
@@ -65,23 +69,29 @@
 }
 
 #pcgf-autodrafts-drafts ul.topiclist dd:nth-child(2) {
+    max-width: 180px;
+    min-width: 180px;
+    width: 180px;
+}
+
+#pcgf-autodrafts-drafts ul.topiclist dd:nth-child(3) {
     max-width: 100px;
     min-width: 100px;
     text-align: center;
     width: 100px;
 }
 
-#pcgf-autodrafts-drafts ul.topiclist dd:nth-child(3) {
+#pcgf-autodrafts-drafts ul.topiclist dd:nth-child(4) {
     max-width: 160px;
     min-width: 160px;
     width: 160px;
 }
 
-#pcgf-autodrafts-drafts ul.topiclist dd:nth-child(4) {
+#pcgf-autodrafts-drafts ul.topiclist dd:nth-child(5) {
     width: 100%;
 }
 
-#pcgf-autodrafts-drafts ul.topiclist dd:nth-child(5) {
+#pcgf-autodrafts-drafts ul.topiclist dd:nth-child(6) {
     max-width: 170px;
     min-width: 170px;
     text-align: center;
@@ -101,58 +111,10 @@
 }
 
 #pcgf-autodrafts-drafts input:last-child {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
-/*
-
-table.pcgf-drafts {
-    border-collapse: collapse;
-    text-align: left;
-    width: 100%;
+#pcgf-autodrafts-notifications {
+    margin-bottom: 0;
+    padding: 2px;
 }
-
-table.pcgf-drafts tr {
-    -moz-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
-}
-
-table.pcgf-drafts tr:not(:first-child):hover, table.pcgf-drafts tr:not(:first-child):nth-child(odd):hover {
-    background-color: rgb(230, 230, 230);
-    -moz-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-}
-
-table.pcgf-drafts tr:not(:first-child):nth-child(odd) {
-    background-color: rgb(250, 250, 250);
-}
-
-table.pcgf-drafts tr th {
-    color: rgb(255, 255, 255);
-    font-weight: 400;
-    height: 40px;
-    text-align: center;
-}
-
-table.pcgf-drafts tr td:last-child {
-    text-align: right;
-}
-
-table.pcgf-drafts tr td[colspan="5"] {
-    text-align: center;
-}
-
-table.pcgf-drafts tr th, table.pcgf-drafts tr td {
-    vertical-align: middle;
-}
-
-table.pcgf-drafts tr th, table.pcgf-drafts tr td {
-    padding: 4px;
-}
-
-table.pcgf-drafts tr td > input {
-    margin: 0px 3px;
-}*/

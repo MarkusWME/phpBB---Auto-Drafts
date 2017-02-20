@@ -3,6 +3,9 @@ var pcgfDraftSaveButton = $('#pcgf-autodrafts-save');
 var pcgfDraftLoadButton = $('#pcgf-autodrafts-load');
 var pcgfDraftCloseButton = $('#pcgf-autodrafts-close');
 var pcgfDraftContainer = $('#pcgf-autodrafts-container');
+var pcgfDraftNotificationContainer = $('#pcgf-autodrafts-notifications');
+var pcgfDraftNotificationAutoDraft = $('#pcgf-autodrafts-autosaved');
+var pcgfDraftNotificationQuickDraft = $('#pcgf-autodrafts-quicksaved');
 var pcgfDraftList = $('#pcgf-autodrafts-drafts');
 var pcgfDraftForumId = $('#pcgf-autodrafts-forum-id').val();
 var pcgfDraftTopicId = $('#pcgf-autodrafts-topic-id').val();
@@ -11,7 +14,7 @@ var pcgfDraftSubjectField = $('#subject');
 var pcgfDraftMessageField = $('#message');
 var pcgfLoadedDraft = -1;
 
-function assignEventHandlers() {
+function assignPCGFAutodraftsEventHandlers() {
     // Append the event handlers for the buttons
     pcgfDraftSaveButton.on('click', function(e) {
         // Don't reload the site when the button is clicked
@@ -56,18 +59,23 @@ function assignEventHandlers() {
     });
 
     $(document).on('click', 'input[name="post"]', function() {
-        // Delete the auto draft
+        // Delete the selected quick draft (if there is one)
+        if (pcgfLoadedDraft >= 0) {
+            deleteDraft(pcgfLoadedDraft);
+        }
         var drafts = getDrafts();
         var draft;
         for (var i = 0; i < drafts.length; i++) {
             draft = drafts[i];
-            if (draft.autoDraft === true && draft.forumId === pcgfDraftForumId && draft.topicId === pcgfDraftTopicId) {
-                deleteDraft(draft.time);
+            if (draft.username === pcgfDraftUsername && draft.forumId === pcgfDraftForumId && draft.topicId === pcgfDraftTopicId) {
+                if (draft.autoDraft === true) {
+                    // Delete the auto draft
+                    deleteDraft(draft.time);
+                } else if (pcgfDeleteDraftsAfterSubmission == true) {
+                    // Delete all other drafts of the topic
+                    deleteDraft(draft.time);
+                }
             }
-        }
-        // Delete the selected quick draft (if there is one)
-        if (pcgfLoadedDraft >= 0) {
-            deleteDraft(pcgfLoadedDraft);
         }
     });
 }
@@ -85,16 +93,25 @@ function saveDraft(quickDraft) {
         subject: pcgfDraftSubjectField.val(),
         message: pcgfDraftMessageField.val()
     };
-    // Delete old auto draft if this is an auto draft
+    var draft;
+    var i;
     if (newDraft.autoDraft === true) {
+        // Delete old auto draft if this is an auto draft
         if (newDraft.message.length < PCGF_MIN_CHARS) {
             return;
         }
-        var draft;
-        for (var i = 0; i < drafts.length; i++) {
+        for (i = 0; i < drafts.length; i++) {
             draft = drafts[i];
-            if (draft.autoDraft === true && draft.forumId === pcgfDraftForumId && draft.topicId === pcgfDraftTopicId) {
+            if (draft.autoDraft === true && draft.username === pcgfDraftUsername && draft.forumId === pcgfDraftForumId && draft.topicId === pcgfDraftTopicId) {
                 delete drafts[i];
+            }
+        }
+    } else {
+        for (i = 0; i < drafts.length; i++) {
+            draft = drafts[i];
+            if (draft.username === pcgfDraftUsername && draft.forumId === pcgfDraftForumId && draft.topicId === pcgfDraftTopicId && draft.message === newDraft.message) {
+                // If a draft with the same text already exists don't create a new one
+                return;
             }
         }
     }
@@ -102,6 +119,12 @@ function saveDraft(quickDraft) {
     drafts.push(newDraft);
     // Save the drafts
     localStorage['pcgfDrafts'] = JSON.stringify(drafts).replace(/null,?/gi, '');
+    // Show save notification
+    if (newDraft.autoDraft === true) {
+        showNotification(pcgfDraftNotificationAutoDraft);
+    } else {
+        showNotification(pcgfDraftNotificationQuickDraft);
+    }
     // Show the new draft in the draft list when the draft list is shown
     if (!pcgfDraftContainer.hasClass('hidden')) {
         showDrafts();
@@ -138,10 +161,19 @@ function deleteDraft(draftTime) {
             // Draft found, delete it
             drafts.splice(i, 1);
             localStorage['pcgfDrafts'] = JSON.stringify(drafts).replace(/null,?/gi, '');
-            showDrafts();
+            if (!pcgfDraftContainer.hasClass('hidden')) {
+                showDrafts();
+            }
             return;
         }
     }
+}
+
+function parsePCGFDrafts() {
+    if (localStorage['pcgfDrafts'][localStorage['pcgfDrafts'].length - 2] === ',') {
+        localStorage['pcgfDrafts'] = localStorage['pcgfDrafts'].substring(0, localStorage['pcgfDrafts'].length - 2) + ']';
+    }
+    return JSON.parse(localStorage['pcgfDrafts']);
 }
 
 function getDrafts() {
@@ -151,19 +183,28 @@ function getDrafts() {
         return [];
     } else {
         // Load the current drafts
-        drafts = JSON.parse(localStorage['pcgfDrafts']);
+        drafts = parsePCGFDrafts();
     }
     var draft;
     for (var i = 0; i < drafts.length; i++) {
         draft = drafts[i];
-        if (draft === null || draft.time + (pcgfAutoDeleteInterval * 1) < new Date().getTime()) {
+        if (draft === null || (pcgfAutoDeleteInterval > 0 && draft.time + (pcgfAutoDeleteInterval * 1) < new Date().getTime())) {
             // Delete all old or invalid drafts
             delete drafts[i];
         }
     }
     // Save the drafts object so that deleted drafts get deleted in local storage too
     localStorage['pcgfDrafts'] = JSON.stringify(drafts).replace(/null,?/gi, '');
-    return JSON.parse(localStorage['pcgfDrafts']);
+    return parsePCGFDrafts();
+}
+
+function showNotification(notificationElement) {
+    notificationElement.show();
+    pcgfDraftNotificationContainer.show(200);
+    setTimeout(function() {
+        pcgfDraftNotificationContainer.hide(500);
+        notificationElement.hide();
+    }, 1500);
 }
 
 $(document).ready(function() {
@@ -174,12 +215,13 @@ $(document).ready(function() {
         pcgfDraftLoadButton.removeClass('hidden');
         pcgfDraftCloseButton.removeClass('hidden');
         pcgfDraftContainer.insertBefore('#postingbox + div.panel + div');
+        pcgfDraftNotificationContainer.insertBefore(pcgfDraftContainer);
         if (pcgfAutoSaveInterval > 0) {
             setInterval(saveDraft, pcgfAutoSaveInterval);
         }
-        assignEventHandlers();
+        assignPCGFAutodraftsEventHandlers();
         // Load the last auto draft automatically if no text is inside the message field
-        if (pcgfDraftMessageField.val().length === 0) {
+        if (pcgfInsertLastDraft == true && pcgfDraftMessageField.val().length === 0) {
             var drafts = getDrafts();
             var draft;
             for (var i = 0; i < drafts.length; i++) {

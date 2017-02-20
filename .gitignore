@@ -5,6 +5,7 @@
 # IntelliJ
 /out/
 /.idea/
+/images/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

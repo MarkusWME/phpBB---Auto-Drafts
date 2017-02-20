@@ -2,22 +2,33 @@
 
 /**
  * @author    MarkusWME <markuswme@pcgamingfreaks.at>
- * @copyright 2016 MarkusWME
+ * @copyright 2016, 2017 MarkusWME
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  */
 
 namespace pcgf\autodrafts\event;
 
+use pcgf\autodrafts\migrations\release_1_1_0;
+use phpbb\config\config;
+use phpbb\db\driver\factory;
+use phpbb\template\template;
+use phpbb\user;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/** @version 1.0.0 */
+/** @version 1.1.0 */
 class listener implements EventSubscriberInterface
 {
-    /** @var \phpbb\user $user User object */
+    /** @var user $user User object */
     protected $user;
 
-    /** @var  \phpbb\template\template $template Template object */
+    /** @var  template $template Template object */
     protected $template;
+
+    /** @var  config $config Configuration object */
+    protected $config;
+
+    /** @var factory $db Database object */
+    protected $db;
 
     /**
      * Constructor
@@ -25,15 +36,17 @@ class listener implements EventSubscriberInterface
      * @access public
      * @since  1.0.0
      *
-     * @param \phpbb\user              $user     User object
-     * @param \phpbb\template\template $template Template object
-     *
-     * @return \pcgf\autodrafts\event\listener The listener object of the extension
+     * @param user     $user     User object
+     * @param template $template Template object
+     * @param config   $config   Configuration object
+     * @param factory  $db       Database object
      */
-    public function __construct(\phpbb\user $user, \phpbb\template\template $template)
+    public function __construct(user $user, template $template, config $config, factory $db)
     {
         $this->user = $user;
         $this->template = $template;
+        $this->config = $config;
+        $this->db = $db;
     }
 
     /**
@@ -57,11 +70,10 @@ class listener implements EventSubscriberInterface
      *
      * @access public
      * @since  1.0.0
-     *
-     * @param $event The event data
      */
-    public function setup_template_data($event)
+    public function setup_template_data()
     {
+        global $table_prefix;
         $this->user->add_lang_ext('pcgf/autodrafts', 'autodrafts');
         $locales = array(
             'days'        => array($this->user->lang['datetime']['Monday'], $this->user->lang['datetime']['Tuesday'], $this->user->lang['datetime']['Wednesday'], $this->user->lang['datetime']['Thursday'], $this->user->lang['datetime']['Friday'], $this->user->lang['datetime']['Saturday'], $this->user->lang['datetime']['Sunday'],),
@@ -78,9 +90,29 @@ class listener implements EventSubscriberInterface
         $this->template->assign_vars(array(
             'PCGF_AUTO_DRAFTS'            => true,
             'PCGF_AUTO_DRAFT_DATE_FORMAT' => $this->user->date_format,
-            'PCGF_AUTO_DELETE_INTERVAL'   => 2592000000,
-            'PCGF_AUTO_SAVE_INTERVAL'     => 20000,
             'PCGF_LOCALES'                => json_encode($locales),
         ));
+        $query = 'SELECT *
+            FROM ' . $table_prefix . release_1_1_0::AUTODRAFTS_SETTINGS_TABLE . '
+            WHERE user_id = ' . $this->db->sql_escape($this->user->data['user_id']);
+        $result = $this->db->sql_query($query);
+        if ($user_settings = $this->db->sql_fetchrow($result))
+        {
+            $this->template->assign_vars(array(
+                'PCGF_AUTO_DELETE_INTERVAL'               => $user_settings['delete_interval'] * 1000,
+                'PCGF_AUTO_SAVE_INTERVAL'                 => $user_settings['save_interval'] * 1000,
+                'PCGF_AUTODRAFTS_INSERT_LAST'             => $user_settings['insert_last'],
+                'PCGF_AUTODRAFTS_DELETE_AFTER_SUBMISSION' => $user_settings['delete_after_submission'],
+            ));
+        }
+        else
+        {
+            $this->template->assign_vars(array(
+                'PCGF_AUTO_DELETE_INTERVAL'               => $this->config['pcgf_autodrafts_delete_interval'] * 1000,
+                'PCGF_AUTO_SAVE_INTERVAL'                 => $this->config['pcgf_autodrafts_save_interval'] * 1000,
+                'PCGF_AUTODRAFTS_INSERT_LAST'             => $this->config['pcgf_autodrafts_auto_insert_last_draft'],
+                'PCGF_AUTODRAFTS_DELETE_AFTER_SUBMISSION' => $this->config['pcgf_autodrafts_delete_drafts_after_submission'],
+            ));
+        }
     }
 }
