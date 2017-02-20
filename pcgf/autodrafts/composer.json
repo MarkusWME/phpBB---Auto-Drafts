@@ -3,8 +3,8 @@
     "type": "phpbb-extension",
     "description": "An extension that allows the user to save and load drafts. Also drafts will be created automatically, per default, every 20 seconds. The extension works offline all the way, so no communication with the server is needed. You can adjust a couple of settings in the ACP (default settings) and the UCP (user settings).",
     "homepage": "https://github.com/MarkusWME/phpBB---Auto-Drafts",
-    "version": "1.1.0",
-    "time": "2017-02-18",
+    "version": "1.1.1",
+    "time": "2017-02-20",
     "keywords": ["draft", "drafts", "quick draft", "auto draft"],
     "license": "GPL-2.0",
     "authors": [
