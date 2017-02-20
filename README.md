@@ -42,3 +42,8 @@ To install the extension you have to do the following steps:
 
 ## External links
 [phpBB extension database](https://www.phpbb.com/customise/db/extension/auto_drafts/ "Show extension entry on phpBB.com")
+
+## Donate
+If you like the extension feel free to [Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SY9JFM9XL9CWQ).
+
+[![Donate with PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SY9JFM9XL9CWQ)
