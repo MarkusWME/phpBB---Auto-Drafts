@@ -15,7 +15,7 @@ use phpbb\template\template;
 use phpbb\user;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/** @version 1.1.0 */
+/** @version 1.1.2 */
 class listener implements EventSubscriberInterface
 {
     /** @var user $user User object */
@@ -114,5 +114,6 @@ class listener implements EventSubscriberInterface
                 'PCGF_AUTODRAFTS_DELETE_AFTER_SUBMISSION' => $this->config['pcgf_autodrafts_delete_drafts_after_submission'],
             ));
         }
+        $this->db->sql_freeresult($result);
     }
 }

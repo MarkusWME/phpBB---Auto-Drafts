@@ -10,7 +10,7 @@ namespace pcgf\autodrafts\ucp;
 
 use pcgf\autodrafts\migrations\release_1_1_0;
 
-/** @version 1.1.0 */
+/** @version 1.1.2 */
 class autodrafts_module
 {
     /** @var string $page_title The title of the page */
@@ -88,6 +88,7 @@ class autodrafts_module
                 'PCGF_AUTODRAFTS_DELETE_AFTER_SUBMISSION' => $config['pcgf_autodrafts_delete_drafts_after_submission'],
             ));
         }
+        $db->sql_freeresult($result);
         $template->assign_var('U_ACTION', $this->u_action);
     }
 }
