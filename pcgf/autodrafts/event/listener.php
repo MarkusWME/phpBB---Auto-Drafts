@@ -90,11 +90,11 @@ class listener implements EventSubscriberInterface
         $this->template->assign_vars(array(
             'PCGF_AUTO_DRAFTS'            => true,
             'PCGF_AUTO_DRAFT_DATE_FORMAT' => $this->user->date_format,
-            'PCGF_LOCALES'                => json_encode($locales),
+            'PCGF_LOCALES'                => json_encode($locales, JSON_HEX_APOS),
         ));
         $query = 'SELECT *
             FROM ' . $table_prefix . release_1_1_0::AUTODRAFTS_SETTINGS_TABLE . '
-            WHERE user_id = ' . $this->db->sql_escape($this->user->data['user_id']);
+            WHERE user_id = ' . ((int) $this->user->data['user_id']);
         $result = $this->db->sql_query($query);
         if ($user_settings = $this->db->sql_fetchrow($result))
         {

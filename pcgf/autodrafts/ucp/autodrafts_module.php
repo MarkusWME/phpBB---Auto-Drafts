@@ -37,7 +37,7 @@ class autodrafts_module
         $this->page_title = $user->lang('UCP_PCGF_AUTODRAFTS');
         $this->tpl_name = 'ucp_autodrafts_body';
         add_form_key('pcgf/autodrafts');
-        $user_id = $db->sql_escape($user->data['user_id']);
+        $user_id = (int) $user->data['user_id'];
         $query = 'SELECT *
             FROM ' . $table_prefix . release_1_1_0::AUTODRAFTS_SETTINGS_TABLE . '
             WHERE user_id = ' . $user_id;
@@ -45,6 +45,10 @@ class autodrafts_module
         $user_settings = $db->sql_fetchrow($result);
         if ($request->is_set_post('submit'))
         {
+            if (!check_form_key('pcgf/autodrafts'))
+            {
+                trigger_error('FORM_INVALID', E_USER_WARNING);
+            }
             $data = array(
                 'save_interval'           => $db->sql_escape($request->variable('autodrafts_save_interval', 20)),
                 'delete_interval'         => $db->sql_escape($request->variable('autodrafts_delete_interval', 2592000)),

@@ -37,6 +37,10 @@ class autodrafts_module
         add_form_key('pcgf/autodrafts');
         if ($request->is_set_post('submit'))
         {
+            if (!check_form_key('pcgf/autodrafts'))
+            {
+                trigger_error('FORM_INVALID', E_USER_WARNING);
+            }
             $config->set('pcgf_autodrafts_save_interval', $request->variable('autodrafts_save_interval', 20));
             $config->set('pcgf_autodrafts_delete_interval', $request->variable('autodrafts_delete_interval', 2592000));
             $config->set('pcgf_autodrafts_auto_insert_last_draft', $request->variable('autodrafts_insert_last', 1));
