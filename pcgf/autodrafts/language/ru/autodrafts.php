@@ -27,7 +27,7 @@ $lang = array_merge($lang, array(
     'PCGF_DELETE_DRAFT'    => 'Удалить черновик',
     'PCGF_DRAFT_TEXT'      => 'Текст',
     'PCGF_DRAFT_TIME'      => 'Время черновика',
-    'PCGF_LOAD_DRAFT'      => 'Загрузить черновик',
+    'PCGF_LOAD_DRAFT'      => 'Загрузить быстрый черновик',
     'PCGF_NO_DRAFTS'       => 'Не найдено ни одного черновика',
     'PCGF_QUICK_DRAFT'     => 'Быстро сохранить в черновик',
     'PCGF_DAY_APPENDIX_1'  => '',
@@ -63,4 +63,8 @@ $lang = array_merge($lang, array(
     'PCGF_DAY_APPENDIX_31' => '',
     'PCGF_DAY_APPENDIX_AM' => 'am',
     'PCGF_DAY_APPENDIX_PM' => 'pm',
+	// New language data since version 1.1.0
+    'PCGF_AUTODRAFT_SAVED'    => 'Авто черновик сохранён!',
+    'PCGF_DRAFTS_SAVED_UNTIL' => 'Сохранено до',
+    'PCGF_QUICKDRAFT_SAVED'   => 'Быстрый черновик сохранён!',
 ));
